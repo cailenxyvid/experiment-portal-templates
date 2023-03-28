@@ -1,38 +1,29 @@
-# create-svelte
+# Xyvid Portal Template + Brand Theme experiment
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
 
-## Creating a project
+## Theme
 
-If you're seeing this, you've probably already done this step. Congrats!
+This approach leverages CSS variables to make DB/endpoint results (mocked up in local Svelte stores here) accesible to Tailwind and scoped Svelte style blocks. 
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+#### See `/src/routes/+layout.svelte`
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+### Usage
 
-## Developing
+#### Tailwind
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+`bg-[color:var(--theme-background)]`
 
-```bash
-npm run dev
+#### Style blocks
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+`background-color: var(--theme-primary);`
 
-## Building
+## Template
 
-To create a production version of your app:
+This approach loads template components on demand, based on the selected Template Group and current event status.
+`import('../lib/templates/'+$activeTheme.name + '/' + $activeEvent.status+'.svelte')`
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Two notable downsides:
+* Poor DX; loading components with a derived string disables HMR for the component being dynamically loaded (nested components still refresh correctly).
+  * It is possible this can be solved with additional Vite/webpack settings or plugins
+* Possible deployment challenges 
+  * Vercel breaks. It looks this issue has been addressed for [similar](https://github.com/sveltejs/kit/issues/3308) use cases and may not even be an issue on whatever build environment we use, but worth noting
