@@ -5,7 +5,7 @@
     import { activeEvent } from "$lib/stores/event"
 
     const loadTemplate = async (template:string) => {        
-        return import(`/src/lib/templates/${activeScreen}.svelte`)
+        return import('../lib/templates/'+activeScreen+'.svelte')
     }
 
     // theme names serve to group templates. each theme should have a template for each event status.    
